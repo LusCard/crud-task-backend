@@ -3,7 +3,7 @@ import { Sequelize, DataTypes } from "sequelize";
 const sequelize = new Sequelize("crud-task-borraralentregar","root","", 
     {host:"", dialect:"mysql"})
 
-    const TaskModel = sequelize.define('task', {
+export const TaskModel = sequelize.define('task', {
       title: {
           type: DataTypes.STRING,
           allowNull: false

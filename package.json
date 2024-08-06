@@ -1,0 +1,19 @@
+{
+  "name": "crud-task-backend",
+  "version": "1.0.0",
+  "description": "Esta es una lista de \"quehaceres\" que tiene la capacidad de visualizar, agregar, editar y borrar tareas para hacer.",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "nodemon": "^3.1.4",
+    "sequelize": "^6.37.3"
+  }
+}

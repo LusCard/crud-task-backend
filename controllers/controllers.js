@@ -1,9 +1,9 @@
 import {TaskModel} from "../config/database.js"
 export const control = {};
 
-control.getTasks = (req, res) => {
+control.getTasks = async (req, res) => {
     try {
-        const tasks =  TaskModel.findAll();
+        const tasks =  await TaskModel.findAll();
         res.json(tasks);
     } catch (error) {
         console.log(error);
@@ -31,9 +31,13 @@ control.createTask = async (req, res) => {
     if (!title || title.length >= 245) {
         return res.status(400).json({ message: "Title must be less than 245 characters" });
     }
+    if (!description || description.trim() === '') {
+        return res.status(400).json({ message: "Description cannot be empty" });
+    }
+    
 
     try {
-        const task = await TaskModel.create({ title, description, dueDate });
+        const task = await TaskModel.create({ title, description,});
         res.status(201).json(task);
     } catch (error) {
         console.log(error);

@@ -26,9 +26,9 @@ control.getOneTask = async (req, res) => {
 
 
 control.createTask = async (req, res) => {
-    const { title, description, dueDate } = req.body;
+    const { title, description,} = req.body;
 
-    if (!title || title.length >= 245) {
+    if (!title || title.length >= 255) {
         return res.status(400).json({ message: "Title must be less than 245 characters" });
     }
     if (!description || description.trim() === '') {

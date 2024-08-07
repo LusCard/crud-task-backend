@@ -1,9 +1,9 @@
 import {TaskModel} from "../config/database.js"
 export const control = {};
 
-control.getTasks = async (req, res) => {
+control.getTasks = (req, res) => {
     try {
-        const tasks = await TaskModel.findAll();
+        const tasks =  TaskModel.findAll();
         res.json(tasks);
     } catch (error) {
         console.log(error);
@@ -11,15 +11,36 @@ control.getTasks = async (req, res) => {
     }
 }
 
-control.createTask = (req, res)=>{
+control.getOneTask = async (req, res) => {
     try {
-        const task = TaskModel.create(req.body)
-        res.json(task)
-    }catch{
-        console.log(error)
-        res.status(500).json({message: "Error creating task"})
+        const task = await TaskModel.findByPk(req.params.id);
+        if (!task) {
+            return res.status(404).json({ message: "Task not found" });
+        }
+        res.json(task);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Error getting task" });
     }
-}
+};
+
+
+control.createTask = async (req, res) => {
+    const { title, description, dueDate } = req.body;
+
+    if (!title || title.length >= 245) {
+        return res.status(400).json({ message: "Title must be less than 245 characters" });
+    }
+
+    try {
+        const task = await TaskModel.create({ title, description, dueDate });
+        res.status(201).json(task);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Error creating task" });
+    }
+};
+
 //!Change so you can find by title
 control.updateTask = async (req, res) => {
     try {

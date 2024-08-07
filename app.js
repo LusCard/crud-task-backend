@@ -1,11 +1,13 @@
 import express from "express";
-import { connectDatabase } from "./config/database.js"
+import { connectDatabase } from "./config/database.js";
+import { router } from "./routes/routes.js";
 
 const app = express();
 const port = 4000;
 
-app.get("/", (req, res)=>{
-   res.send("hol")})
+
+app.use(express.json());
+app.use(router)
 
 connectDatabase();
 app.listen(port, () =>{

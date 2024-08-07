@@ -1,8 +1,10 @@
 import { Router } from "express";
+import {control} from "../controllers/controllers.js"
 
-const router = Router();
+export const router = Router();
 
-router.get("/", /*controladores*/)
-router.post()
-router.put()
-router.delete()
+router.get("/task/:id", control.getOneTask)
+router.get("/tasks/", control.getTasks )
+router.post("/task/", control.createTask)
+router.put("/task/:id", control.updateTask)
+router.delete("/task/:id", control.deleteTask)

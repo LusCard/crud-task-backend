@@ -1,14 +1,18 @@
 import express from "express";
-import { connectDatabase } from "./config/database.js";
-import { router } from "./routes/routes.js";
+import { connectDB } from "./src/config/database.js";
+import { createTable } from "./src/controllers/controllers.js";
+import { router } from "./src/routes/routes.js";
+import "dotenv/config";
 
 const app = express();
-const port = 4000;
+const port = process.env.PORT;
 
+connectDB();
+createTable();
 
 app.use(express.json());
-app.use(router)
+app.use(router);
 
-connectDatabase();
-app.listen(port, () =>{
-    console.log(`Server listening on port ${port}`)})
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});

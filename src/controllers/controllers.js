@@ -35,16 +35,8 @@ control.createTask = async (req, res) => {
   try {
     const { title, description } = req.body;
     const sql = "INSERT INTO  tasks ( title, description) VALUES (?,?)";
-    await connection.query(sql, [title, description]);
-    if (!title || !description) {
-      res.json({ msg: "Task title and description are required" });
-    } else {
-      if (title >= 255) {
-        res.json({ msg: "Task title too long" });
-      } else {
-        res.json({ msg: "Task created successfully" });
-      }
-    }
+    const result = await connection.query(sql, [title, description]);
+    return res.json(result);
   } catch (error) {
     console.log(error);
   }
@@ -54,25 +46,11 @@ control.updateTask = async (req, res) => {
   try {
     const { title, description } = req.body;
     const { id } = req.params;
-
-    if (!title || !description) {
-      return res.json({ msg: "Task title and description are required" });
-    }
-
-    if (title.length > 255) {
-      return res.json({ msg: "Task title too long" });
-    }
-
     const [result] = await connection.query(
       "UPDATE tasks SET title = ?, description = ? WHERE id = ?",
       [title, description, id]
     );
-
-    if (result.affectedRows === 0) {
-      return res.json({ msg: "No task found with the given ID" });
-    }
-
-    res.json({ msg: "Task updated successfully" });
+    res.json(result);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal Server Error" });

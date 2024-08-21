@@ -33,9 +33,10 @@ control.getOneTask = async (req, res) => {
 
 control.createTask = async (req, res) => {
   try {
-    const { title, description } = req.body;
-    const sql = "INSERT INTO  tasks ( title, description) VALUES (?,?)";
-    await connection.query(sql, [title, description]);
+    const { title, description, isComplete } = req.body;
+    const sql =
+      "INSERT INTO  tasks ( title, description, isComplete) VALUES (?,?,?)";
+    await connection.query(sql, [title, description, isComplete]);
     if (!title || !description) {
       res.json({ msg: "Task title and description are required" });
     } else {
@@ -52,7 +53,7 @@ control.createTask = async (req, res) => {
 
 control.updateTask = async (req, res) => {
   try {
-    const { title, description } = req.body;
+    const { title, description, isComplete } = req.body;
     const { id } = req.params;
 
     if (!title || !description) {
@@ -64,8 +65,8 @@ control.updateTask = async (req, res) => {
     }
 
     const [result] = await connection.query(
-      "UPDATE tasks SET title = ?, description = ? WHERE id = ?",
-      [title, description, id]
+      "UPDATE tasks SET title = ?, description = ?, isComplete = ? WHERE id = ?",
+      [title, description, isComplete, id]
     );
 
     if (result.affectedRows === 0) {

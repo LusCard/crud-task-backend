@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import morgan, { format } from "morgan";
+import morgan from "morgan";
 import { connectDB } from "./src/config/database.js";
 import { createTable } from "./src/controllers/controllers.js";
 import { router } from "./src/routes/routes.js";
